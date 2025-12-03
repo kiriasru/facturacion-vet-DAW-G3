@@ -9,5 +9,5 @@ app.use(express.json());
 
 
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en https://localhost:${PORT}`);
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
