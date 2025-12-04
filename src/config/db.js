@@ -4,7 +4,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'facturacion_vet_DB'
+    database: 'Facturacion_Veterinaria'
 });
 
 module.exports = pool;
