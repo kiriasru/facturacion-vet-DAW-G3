@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/db');
 
-
-router.get('/clientes',(req,res) =>{
+router.get('/',(req,res) =>{
     const sql = 'select Id, Nombre, Telefono from Cliente';
     
     pool.query(sql,(err, results)=>{
@@ -16,7 +15,7 @@ router.get('/clientes',(req,res) =>{
     });
 });
 
-router.get('/clientes/:Id',(req,res)=>{
+router.get('/:Id',(req,res)=>{
     const Nombre = req.params.Nombre;
 
     if (!Id){
@@ -34,7 +33,7 @@ router.get('/clientes/:Id',(req,res)=>{
     }
 });
 
-router.post('/clientes',(req,res)=>{
+router.post('/',(req,res)=>{
     const cliente = req.body;
     if (!cliente.Nombre || !cliente.Telefono){
         return res.status(400).json({status:400,message:'Los parametros Nombre y Telefono son requeridos'})
@@ -64,7 +63,7 @@ router.post('/clientes',(req,res)=>{
      });
 });
 
-router.put('/clientes',(req,res)=>{
+router.put('/',(req,res)=>{
     const cliente = req.body;
 
     if (!cliente.Id){
@@ -83,7 +82,7 @@ router.put('/clientes',(req,res)=>{
     });
 });
 
-router.delete('/clientes/:Id', (req,res)=>{
+router.delete('/:Id', (req,res)=>{
     const Id = parseInt(req.params.Id);
 
     if (!Id){
@@ -104,8 +103,5 @@ router.delete('/clientes/:Id', (req,res)=>{
         return res.status(200).json({status:200, message:'Registro eliminado exitosamente...'})
     });
 });
-
-
-
 
 module.exports = router;

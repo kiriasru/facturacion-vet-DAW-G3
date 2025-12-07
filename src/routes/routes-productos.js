@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../config/db');
 
-router.get('/producto',(req,res) =>{
-    const sql = 'select Id, Nombre, Stock, Precio';
+router.get('/',(req,res) =>{
+    const sql = 'select Id, Nombre, Stock, Precio from Producto';
     
     pool.query(sql,(err, results)=>{
         if(err){
@@ -15,7 +15,7 @@ router.get('/producto',(req,res) =>{
     });
 });
 
-router.get('/producto/:Id',(req,res)=>{
+router.get('/:Id',(req,res)=>{
     const Id = req.params.Id;
 
     if (!Id){
@@ -33,7 +33,7 @@ router.get('/producto/:Id',(req,res)=>{
     }
 });
 
-router.get('/producto/:Nombre',(req,res)=>{
+router.get('/:Nombre',(req,res)=>{
     const Nombre = req.params.Nombre;
 
     if (!Nombre){
@@ -51,7 +51,7 @@ router.get('/producto/:Nombre',(req,res)=>{
     }
 });
 
-router.get('/producto/:Stock',(req,res)=>{
+router.get('/:Stock',(req,res)=>{
     const Stock = req.params.Stock;
 
     if (!Stock){
@@ -69,7 +69,7 @@ router.get('/producto/:Stock',(req,res)=>{
     }
 });
 
-router.get('/producto/:Precio',(req,res)=>{
+router.get('/:Precio',(req,res)=>{
     const Precio = req.params.Precio;
 
     if (!Precio){
@@ -87,7 +87,7 @@ router.get('/producto/:Precio',(req,res)=>{
     }
 });
 
-router.post('/producto',(req,res)=>{
+router.post('/',(req,res)=>{
     const producto = req.body;
     if (!producto.Nombre || !producto.Stock || !producto.Precio){
         return res.status(400).json({status:400,message:'Los parametros Nombre, Stock y Precio son requeridos'})
@@ -117,7 +117,7 @@ router.post('/producto',(req,res)=>{
      });
 });
 
-router.put('/producto',(req,res)=>{
+router.put('/',(req,res)=>{
     const producto = req.body;
 
     if (!producto.Id){
@@ -139,7 +139,7 @@ router.put('/producto',(req,res)=>{
     });
 });
 
-router.delete('/producto/:Id', (req,res)=>{
+router.delete('/:Id', (req,res)=>{
     const Id = parseInt(req.params.Id);
 
     if (!Id){
@@ -160,8 +160,5 @@ router.delete('/producto/:Id', (req,res)=>{
         return res.status(200).json({status:200, message:'Registro eliminado exitosamente...'})
     });
 });
-
-
-
 
 module.exports = router;
