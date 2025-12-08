@@ -7,7 +7,7 @@ const {
     crearCliente,
     actualizarClientes,
     eliminarCliente
-} = require ('../controllers/clientes-controller');
+} = require ('../controllers/clientesController');
 
 router.get('/', obtenerClientes);
 router.get('/:Id', obtenerClientesPorId);
