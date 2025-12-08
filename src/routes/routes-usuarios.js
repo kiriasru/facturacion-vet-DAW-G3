@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 
 });
 
-router.get('/:id', (req, res) => {
+router.get('/id/:id', (req, res) => {
     const Id = parseInt(req.params.id);
 
     if (!Id) {
@@ -66,7 +66,7 @@ router.get('/:id', (req, res) => {
 
 });
 
-router.get('/:nombre', (req, res) => {
+router.get('/nombre/:nombre', (req, res) => {
 
     const Nombre = req.params.nombre;
 

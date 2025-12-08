@@ -15,7 +15,7 @@ router.get('/',(req,res) =>{
     });
 });
 
-router.get('/:Id',(req,res)=>{
+router.get('/id/:Id',(req,res)=>{
     const Id = req.params.Id;
 
     if (!Id){
@@ -33,7 +33,7 @@ router.get('/:Id',(req,res)=>{
     }
 });
 
-router.get('/:Nombre',(req,res)=>{
+router.get('/nombre/:Nombre',(req,res)=>{
     const Nombre = req.params.Nombre;
 
     if (!Nombre){

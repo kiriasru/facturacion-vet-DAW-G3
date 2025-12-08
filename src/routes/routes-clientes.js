@@ -15,13 +15,13 @@ router.get('/',(req,res) =>{
     });
 });
 
-router.get('/:Id',(req,res)=>{
-    const Nombre = req.params.Nombre;
+router.get('/id/:Id',(req,res)=>{
+    const Id = req.params.Id;
 
     if (!Id){
-        res.status(400).json({status:400,message:'El nombre es requerido.'})
+        res.status(400).json({status:400,message:'El Id es requerido.'})
     }else{
-        const sql = 'select Id, Nombre, Telefono from Cliente where Nombre =?';
+        const sql = 'select Id, Nombre, Telefono from Cliente where Id =?';
 
         pool.query(sql,[Id],(err,results)=>{
            if(err){

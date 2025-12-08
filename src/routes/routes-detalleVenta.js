@@ -28,7 +28,7 @@ router.get('/venta/:Id', (req, res) => {
     });
 });
 
-router.get('/:Id', (req, res) => {
+router.get('/id/:Id', (req, res) => {
     const Id = parseInt(req.params.Id);
     const sql = 'SELECT Id, Id_Venta, Id_Producto, Cantidad, Subtotal FROM detalleventa WHERE Id = ?';
 

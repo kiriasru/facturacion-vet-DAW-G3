@@ -10,6 +10,7 @@ const usuariosRoutes = require('./src/routes/routes-usuarios');
 const productosRoutes = require('./src/routes/routes-productos');
 const loginRoutes = require('./src/routes/routes-login');
 const registrarRoutes = require('./src/routes/routes-registrar');
+const detalleVentaRoutes = require('./src/routes/routes-detalleVenta');
 
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/clientes', authMiddleware, clientesRoutes);
 app.use('/productos', authMiddleware, productosRoutes);
 app.use('/usuarios', authMiddleware, usuariosRoutes);
+app.use('/detalleVenta', authMiddleware, detalleVentaRoutes);
 
 // Rutas publicas
 app.use('/login', loginRoutes);
