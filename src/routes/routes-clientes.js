@@ -3,16 +3,16 @@ const router = express.Router();
 
 const {
     obtenerClientes,
-    obtenerClientePorId,
+    obtenerClientesPorId,
     crearCliente,
-    actualizarCliente,
+    actualizarClientes,
     eliminarCliente
 } = require('../controllers/clientesController');
 
 router.get('/', obtenerClientes);
-router.get('/:Id', obtenerClientePorId);
+router.get('/:Id', obtenerClientesPorId);
 router.post('/', crearCliente);
-router.put('/', actualizarCliente);
+router.put('/', actualizarClientes);
 router.delete('/:Id', eliminarCliente);
 
 module.exports = router;
