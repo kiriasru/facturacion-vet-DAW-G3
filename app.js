@@ -1,18 +1,21 @@
 const express = require('express');
-require('dotenv').config();
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
-const { authMiddleware } = require('./src/middlewares/auth');
+require('dotenv').config();
 
-const clientesRoutes = require('./src/routes/routes-clientes');
-const usuariosRoutes = require('./src/routes/routes-usuarios');
-const productosRoutes = require('./src/routes/routes-productos');
-const loginRoutes = require('./src/routes/routes-login');
-const registrarRoutes = require('./src/routes/routes-registrar');
-const detalleVentaRoutes = require('./src/routes/routes-detalleVenta');
+const authMiddleware  = require('./src/middlewares/authMiddleware.js');
+
+const clientesRoutes = require('./src/routes/clientesRoute.js');
+const usuariosRoutes = require('./src/routes/usuariosRoutes.js');
+const productosRoutes = require('./src/routes/productosRoute.js');
+const loginRoutes = require('./src/routes/loginRoute.js');
+const registrarRoutes = require('./src/routes/registroRoute.js');
+const detalleVentaRoutes = require('./src/routes/detalleVentaRoute.js');
 
 app.use(express.json());
+app.use(cors());
 
 // Rutas protegidas
 app.use('/clientes', authMiddleware, clientesRoutes);

@@ -26,4 +26,4 @@ const authMiddleware = (req, res, next) => {
     });
 };
 
-module.exports = { authMiddleware, SECRET_KEY };
+module.exports = authMiddleware;
