@@ -16,4 +16,3 @@ router.put('/', actualizarCliente);
 router.delete('/:Id', eliminarCliente);
 
 module.exports = router;
-
