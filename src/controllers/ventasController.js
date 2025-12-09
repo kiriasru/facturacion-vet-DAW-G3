@@ -171,6 +171,6 @@ const insertarDetalles = (Id_Venta, detallesConPrecio, index, res, Id_Usuario, I
 
 module.exports = {
     obtenerVentas,
-    obtenerVentaPorId,
+    obtenerVentasPorId,
     crearVenta
 };

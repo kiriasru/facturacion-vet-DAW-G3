@@ -3,12 +3,12 @@ const router = express.Router();
 
 const {
     obtenerVentas,
-    obtenerVentaPorId,
+    obtenerVentasPorId,
     crearVenta
 } = require('../controllers/ventasController');
 
 router.get('/', obtenerVentas);
-router.get('/:Id', obtenerVentaPorId);
+router.get('/:Id', obtenerVentasPorId);
 router.post('/', crearVenta);
 
 module.exports = router;
