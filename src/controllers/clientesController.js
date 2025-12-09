@@ -14,6 +14,7 @@ const obtenerClientes = (req, res) => {
     });
 };
 
+//GET CLIENTES POR ID
 const obtenerClientesPorId = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -100,7 +101,7 @@ const actualizarClientes = (req, res) => {
     });
 };
 
-//DELETE CLIENTES ID
+//DELETE CLIENTES POR ID
 
 const eliminarCliente = (req, res) => {
     const Id = parseInt(req.params.Id);
