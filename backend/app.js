@@ -20,7 +20,7 @@ app.use('/clientes', authMiddleware, clientesRoutes);
 app.use('/productos', authMiddleware, productosRoutes);
 app.use('/usuarios', authMiddleware, usuariosRoutes);
 app.use('/ventas', authMiddleware, ventasRoutes);
-app.use('/detalleVenta', authMiddleware, detalleVentaRoutes);
+app.use('/detalleventa', authMiddleware, detalleVentaRoutes);
 
 // Rutas publicas
 app.use('/login', loginRoutes);
