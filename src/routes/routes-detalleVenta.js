@@ -15,4 +15,3 @@ router.get('/producto/:Id', obtenerDetallesPorProducto);
 router.get('/:Id', obtenerDetallePorId);
 
 module.exports = router;
-
