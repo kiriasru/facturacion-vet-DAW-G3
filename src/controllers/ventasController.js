@@ -3,7 +3,7 @@ const pool = require('../config/db');
 //GET VENTAS
 const obtenerVentas = (req, res) => {
 
-    const sql = 'SELECTE Id, Id_Usuario, Id_Cliente, Fecha, Total FROM Venta';
+    const sql = 'SELECT Id, Id_Usuario, Id_Cliente, Fecha, Total FROM Venta';
 
     pool.query (sql, (err, results) => {
         if (err) {
@@ -37,15 +37,11 @@ const obtenerVentasPorId = (req, res) => {
 //POST 
 
 const crearVenta = (req, res) => {
-    const Id_Usuario = req.user && req.user.id;
+    const Id_Usuario = req.user.id;
     const { Id_Cliente, Detalles } = req.body;
 
-    if(!Id_Usuario) {
-        return res.status(401).json ({status:401, message: 'Usuario no autenticado.'});
-    }
-
     if (!Id_Cliente || !Detalles || !Array.isArray(Detalles) || Detalles.length === 0){
-        return res.status(400).json({status:400, message: 'Id_Cliente y Detalles de productos'});
+        return res.status(400).json({status:400, message: 'Id_Cliente y Detalles son requeridos'});
     }
 
     const sqlCliente = 'SELECT Id, Nombre, Telefono FROM Cliente WHERE Id = ?';
@@ -111,13 +107,12 @@ const crearVenta = (req, res) => {
 const insertarVenta = (total, detallesConPrecio, Id_Usuario, Id_Cliente, res) => {
     const sqlVenta = 'INSERT INTO Venta (Id_Usuario, Id_Cliente, Fecha, Total) VALUES (?, ?, NOW(), ?)';
 
-    pool.query(sqlVenta, [Id_Usuario, Id_Cliente, total], (erVenta, resultVenta) => {
+    pool.query(sqlVenta, [Id_Usuario, Id_Cliente, total], (errVenta, resultVenta) => {
         if (errVenta) {
             console.log('Error al insertar la venta...');
             return res.status(500).json({status: 500, message: 'Error al insertar la venta...'});
         }
-        const Id_Venta = resultsVenta.insertId;
-
+        const Id_Venta = resultVenta.insertId;
         insertarDetalles(Id_Venta, detallesConPrecio, 0, res, Id_Usuario, Id_Cliente, total);
     });
 };
