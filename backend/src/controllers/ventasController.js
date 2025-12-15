@@ -1,6 +1,5 @@
 const pool = require('../config/db');
 
-//GET VENTAS
 const obtenerVentas = (req, res) => {
 
     const sql = 'SELECT Id, Id_Usuario, Id_Cliente, DATE_FORMAT(Fecha, "%Y-%m-%d %H:%i") as Fecha, Total FROM Venta';
@@ -15,7 +14,6 @@ const obtenerVentas = (req, res) => {
     });
 };
 
-//GET POR ID
 const obtenerVentasPorId = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -33,8 +31,6 @@ const obtenerVentasPorId = (req, res) => {
         return res.status(200).json({status:200, message: 'Venta encontrada exitosamente', data: results});
     });
 };
-
-//POST 
 
 const crearVenta = (req, res) => {
     const Id_Usuario = req.user.id;

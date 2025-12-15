@@ -1,6 +1,5 @@
 const pool = require("../config/db");
 
-/* GET - todos los productos */
 const getProductos = async (req, res) => {
     const sql = "SELECT Id, Nombre, Stock, Precio FROM Producto";
 
@@ -20,7 +19,6 @@ const getProductos = async (req, res) => {
     });
 };
 
-/* GET - producto por ID */
 const getProductoById = async (req, res) => {
     const { id } = req.params;
 
@@ -49,7 +47,6 @@ const getProductoById = async (req, res) => {
     });
 };
 
-/* POST - crear producto */
 const createProducto = async (req, res) => {
     const { Nombre, Stock, Precio } = req.body;
 
@@ -78,7 +75,6 @@ const createProducto = async (req, res) => {
     });
 };
 
-/* PUT - actualizar producto */
 const updateProducto = async (req, res) => {
     const { id } = req.params;
     const { Nombre, Stock, Precio } = req.body;
@@ -115,7 +111,6 @@ const updateProducto = async (req, res) => {
     });
 };
 
-/* DELETE - eliminar producto */
 const deleteProducto = async (req, res) => {
     const { id } = req.params;
 

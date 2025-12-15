@@ -1,6 +1,5 @@
 const pool = require('../config/db');
 
-// GET CLIENTES
 const obtenerClientes = (req, res) => {
     const sql = 'SELECT Id, Nombre, Telefono FROM Cliente';
 
@@ -14,7 +13,6 @@ const obtenerClientes = (req, res) => {
     });
 };
 
-//GET CLIENTES POR ID
 const obtenerClientesPorId = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -43,8 +41,6 @@ const obtenerClientesPorId = (req, res) => {
         });
     }
 };
-
-//POST CLIENTES
 
 const crearCliente = (req, res) => {
     const cliente = req.body;
@@ -79,8 +75,6 @@ const crearCliente = (req, res) => {
     });
 };
 
-//PUT CLIENTES
-
 const actualizarClientes = (req, res) => {
     const Id = parseInt(req.params.Id);
     const { Nombre, Telefono } = req.body;
@@ -105,8 +99,6 @@ const actualizarClientes = (req, res) => {
         }
     });
 };
-
-//DELETE CLIENTES POR ID
 
 const eliminarCliente = (req, res) => {
     const Id = parseInt(req.params.Id);
