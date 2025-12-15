@@ -1,0 +1,35 @@
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+const app = express();
+const PORT = 3000;
+
+const { authMiddleware } = require('./src/middlewares/auth');
+
+const clientesRoutes = require('./src/routes/routes-clientes');
+const usuariosRoutes = require('./src/routes/routes-usuarios');
+const productosRoutes = require('./src/routes/routes-productos');
+const loginRoutes = require('./src/routes/routes-login');
+const registrarRoutes = require('./src/routes/routes-registrar');
+const ventasRoutes = require('./src/routes/routes-ventas');
+const detalleVentaRoutes = require('./src/routes/routes-detalleVenta');
+
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+}));
+
+app.use(express.json());
+
+app.use('/clientes', authMiddleware, clientesRoutes);
+app.use('/productos', authMiddleware, productosRoutes);
+app.use('/usuarios', authMiddleware, usuariosRoutes);
+app.use('/ventas', authMiddleware, ventasRoutes);
+app.use('/detalleventa', authMiddleware, detalleVentaRoutes);
+
+app.use('/login', loginRoutes);
+app.use('/registro', registrarRoutes);
+
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
+});

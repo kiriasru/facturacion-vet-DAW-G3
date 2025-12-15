@@ -1,0 +1,18 @@
+const express = require('express');
+const router = express.Router();
+
+const {
+    obtenerClientes,
+    obtenerClientesPorId,
+    crearCliente,
+    actualizarClientes,
+    eliminarCliente
+} = require('../controllers/clientesController');
+
+router.get('/', obtenerClientes);
+router.get('/:Id', obtenerClientesPorId);
+router.post('/', crearCliente);
+router.put('/:Id', actualizarClientes);
+router.delete('/:Id', eliminarCliente);
+
+module.exports = router;

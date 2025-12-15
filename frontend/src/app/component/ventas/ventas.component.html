@@ -1,0 +1,39 @@
+<h2>Productos</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{ product.Id }}</td>
+      <td>{{ product.Nombre }}</td>
+      <td>{{ product.Precio }}</td>
+      <td>{{ product.Stock }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Realizar Venta</h3>
+<div class="venta-form">
+  <label>
+    Id Cliente:
+    <input type="number" [(ngModel)]="idCliente" />
+  </label>
+  <label>
+    Id Producto:
+    <input type="number" [(ngModel)]="idProducto" />
+  </label>
+  <label>
+    Cantidad:
+    <input type="number" [(ngModel)]="cantidad" />
+  </label>
+  <button (click)="vender()">Vender</button>
+</div>
+
+<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
