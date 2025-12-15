@@ -12,7 +12,7 @@ const {
 router.get('/', obtenerClientes);
 router.get('/:Id', obtenerClientesPorId);
 router.post('/', crearCliente);
-router.put('/', actualizarClientes);
+router.put('/:Id', actualizarClientes);
 router.delete('/:Id', eliminarCliente);
 
 module.exports = router;

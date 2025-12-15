@@ -12,9 +12,7 @@ const {
 
 router.get('/', obtenerUsuarios);
 
-router.get('/id/:id', obtenerUsuarioPorId);
-
-router.get('/nombre/:nombre', obtenerUsuarioPorNombre);
+router.get('/:id', obtenerUsuarioPorId);
 
 router.put('/:id', actualizarUsuario);
 

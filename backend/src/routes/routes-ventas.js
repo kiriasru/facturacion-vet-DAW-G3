@@ -8,7 +8,7 @@ const {
 } = require('../controllers/ventasController');
 
 router.get('/', obtenerVentas);
-router.get('/id/:Id', obtenerVentasPorId);
+router.get('/:Id', obtenerVentasPorId);
 router.post('/', crearVenta);
 
 module.exports = router;

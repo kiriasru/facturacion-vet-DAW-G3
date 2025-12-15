@@ -3,11 +3,11 @@ const pool = require('../config/db');
 //GET VENTAS
 const obtenerVentas = (req, res) => {
 
-    const sql = 'SELECT Id, Id_Usuario, Id_Cliente, Fecha, Total FROM Venta';
+    const sql = 'SELECT Id, Id_Usuario, Id_Cliente, DATE_FORMAT(Fecha, "%Y-%m-%d %H:%i") as Fecha, Total FROM Venta';
 
     pool.query (sql, (err, results) => {
         if (err) {
-            console.log ('Error en la consutla SQL ventas...');
+            console.log ('Error en la consulta SQL ventas...');
             return res.status(500).json ({status:500, message: 'Error en la consulta SQL...'});
         }
 
@@ -23,7 +23,7 @@ const obtenerVentasPorId = (req, res) => {
         return res.status(400).json({status:400, message: 'El Id es requerido...'});
     }
 
-    const sql = 'SELECT Id, Id_Usario, Id_Cliente, Fecha, Total FROM Venta WHERE Id = ?';
+    const sql = 'SELECT Id, Id_Usuario, Id_Cliente, DATE_FORMAT(Fecha, "%Y-%m-%d %H:%i") as Fecha, Total FROM Venta WHERE Id = ?';
 
     pool.query(sql, [Id], (err, results) => {
         if(err) {
@@ -56,12 +56,13 @@ const crearVenta = (req, res) => {
             return res.status(404).json ({ status:404, message: "Cliente no encontrado..."});
         }
         
+        const clienteInfo = resultsCliente[0];
         let total = 0;
         let detallesConPrecio = [];
 
         const procesarProducto = (index) => {
             if (index >= Detalles.length) {
-                insertarVenta(total, detallesConPrecio, Id_Usuario, Id_Cliente, res);
+                insertarVenta(total, detallesConPrecio, Id_Usuario, Id_Cliente, clienteInfo, res);
                 return;
             }
 
@@ -94,6 +95,8 @@ const crearVenta = (req, res) => {
 
                 detallesConPrecio.push({
                     Id_Producto: detalle.Id_Producto,
+                    Nombre: producto.Nombre,
+                    Precio: producto.Precio,
                     Cantidad: detalle.Cantidad,
                     Subtotal: subtotal
                 });
@@ -104,7 +107,7 @@ const crearVenta = (req, res) => {
     });
 };
 
-const insertarVenta = (total, detallesConPrecio, Id_Usuario, Id_Cliente, res) => {
+const insertarVenta = (total, detallesConPrecio, Id_Usuario, Id_Cliente, clienteInfo, res) => {
     const sqlVenta = 'INSERT INTO Venta (Id_Usuario, Id_Cliente, Fecha, Total) VALUES (?, ?, NOW(), ?)';
 
     pool.query(sqlVenta, [Id_Usuario, Id_Cliente, total], (errVenta, resultVenta) => {
@@ -113,21 +116,45 @@ const insertarVenta = (total, detallesConPrecio, Id_Usuario, Id_Cliente, res) =>
             return res.status(500).json({status: 500, message: 'Error al insertar la venta...'});
         }
         const Id_Venta = resultVenta.insertId;
-        insertarDetalles(Id_Venta, detallesConPrecio, 0, res, Id_Usuario, Id_Cliente, total);
+        insertarDetalles(Id_Venta, detallesConPrecio, 0, res, Id_Usuario, Id_Cliente, clienteInfo, total);
     });
 };
 
-const insertarDetalles = (Id_Venta, detallesConPrecio, index, res, Id_Usuario, Id_Cliente, total) => {
+const insertarDetalles = (Id_Venta, detallesConPrecio, index, res, Id_Usuario, Id_Cliente, clienteInfo, total) => {
     if (index >= detallesConPrecio.length) {
+        
+        const subtotal = total;
+        const isv = subtotal * 0.15;
+        const totalConISV = subtotal + isv;
+
         return res.status(201).json({
             status: 201,
             message: 'Venta creada exitosamente.',
-            data: {
-                Id: Id_Venta,
-                Id_Usuario: Id_Usuario,
-                Id_Cliente: Id_Cliente,
-                Total: total,
-                Detalles: detallesConPrecio
+            factura: {
+                veterinaria: {
+                    nombre: 'Veterinaria X',
+                    direccion: 'Tegucigalpa, Honduras',
+                    telefono: '2222-2222'
+                },
+                venta: {
+                    numeroFactura: Id_Venta,
+                    fecha: new Date().toLocaleString('es-HN', { timeZone: 'America/Tegucigalpa' })
+                },
+                cliente: {
+                    nombre: clienteInfo.Nombre,
+                    telefono: clienteInfo.Telefono
+                },
+                productos: detallesConPrecio.map(detalle => ({
+                    nombre: detalle.Nombre,
+                    precio: detalle.Precio,
+                    cantidad: detalle.Cantidad,
+                    subtotal: detalle.Subtotal
+                })),
+                totales: {
+                    subtotal: subtotal.toFixed(2),
+                    isv: isv.toFixed(2),
+                    total: totalConISV.toFixed(2)
+                }
             }
         });
     }
@@ -147,7 +174,6 @@ const insertarDetalles = (Id_Venta, detallesConPrecio, index, res, Id_Usuario, I
             });
         }
 
-        // Actualizar stock
         const sqlUpdateStock = 'UPDATE Producto SET Stock = Stock - ? WHERE Id = ?';
 
         pool.query(sqlUpdateStock, [detalle.Cantidad, detalle.Id_Producto], (errStock, resultsStock) => {
@@ -159,7 +185,7 @@ const insertarDetalles = (Id_Venta, detallesConPrecio, index, res, Id_Usuario, I
                 });
             }
 
-            insertarDetalles(Id_Venta, detallesConPrecio, index + 1, res, Id_Usuario, Id_Cliente, total);
+            insertarDetalles(Id_Venta, detallesConPrecio, index + 1, res, Id_Usuario, Id_Cliente, clienteInfo, total);
         });
     });
 };

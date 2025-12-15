@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api'; // Cambia esto según tu backend
+  private apiUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  login(userData: { username: string; password: string }): Observable<any> {
+  login(userData: { Correo: string; Password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, userData);
   }
 }

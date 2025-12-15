@@ -82,21 +82,26 @@ const crearCliente = (req, res) => {
 //PUT CLIENTES
 
 const actualizarClientes = (req, res) => {
-    const cliente = req.body;
+    const Id = parseInt(req.params.Id);
+    const { Nombre, Telefono } = req.body;
 
-    if (!cliente.Id){
+    if (!Id){
         return res.status(400).json({status:400, message:'El Id es requerido...'});
+    }
+
+    if (!Nombre || !Telefono) {
+        return res.status(400).json({status:400, message:'Nombre y Telefono son requeridos...'});
     }
 
     const sql = 'update Cliente set Nombre=?, Telefono=? where Id=?';
     
-    pool.query(sql,[cliente.Nombre, cliente.Telefono, cliente.Id],(err, results)=>{
+    pool.query(sql,[Nombre, Telefono, Id],(err, results)=>{
         if(err){
             res.status(500).json({status:500, message:'Error en la consulta sql...'})
         }else if(results.affectedRows === 0){
              res.status(404).json({status:404, message:'Cliente no encontrado...'}) 
         }else {
-            res.status(200).json({status:200, message:'Success...', data:cliente })
+            res.status(200).json({status:200, message:'Success...', data:{ Id, Nombre, Telefono }})
         }
     });
 };

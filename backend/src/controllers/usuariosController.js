@@ -64,40 +64,6 @@ const obtenerUsuarioPorId = (req, res) => {
 
 };
 
-const obtenerUsuarioPorNombre = (req, res) => {
-
-    const Nombre = req.params.nombre;
-
-    if (!Nombre) {
-        return res.status(400).json({
-            status: 400,
-            message: 'El nombre es requerido.',
-            data: null
-        });
-    }
-
-    const sql = 'SELECT Id, Nombre, Correo FROM Usuario WHERE Nombre = ?';
-
-    pool.query(sql, [Nombre], (err, results) => {
-
-        if (err) {
-            return res.status(500).json({
-                status: 500,
-                message: 'Error en la consulta SQL...',
-                data: null
-            });
-        }
-
-        return res.status(200).json({
-            status: 200,
-            message: 'Consulta exitosa',
-            data: results
-        });
-
-    });
-
-};
-
 const actualizarUsuario = async (req, res) => {
 
     const Id = parseInt(req.params.id);
@@ -206,7 +172,6 @@ const eliminarUsuario = (req, res) => {
 module.exports = {
     obtenerUsuarios,
     obtenerUsuarioPorId,
-    obtenerUsuarioPorNombre,
     actualizarUsuario,
     eliminarUsuario
 };

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,11 @@ const loginRoutes = require('./src/routes/routes-login');
 const registrarRoutes = require('./src/routes/routes-registrar');
 const ventasRoutes = require('./src/routes/routes-ventas');
 const detalleVentaRoutes = require('./src/routes/routes-detalleVenta');
+
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+}));
 
 app.use(express.json());
 
