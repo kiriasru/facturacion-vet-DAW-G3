@@ -1,0 +1,54 @@
+CREATE DATABASE Facturacion_Veterinaria;
+USE Facturacion_Veterinaria;
+USE mialmacenwebdb;
+
+CREATE TABLE Producto (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Nombre VARCHAR(100) NOT NULL,
+  Precio DECIMAL(10,2) NOT NULL,
+  Stock INT NOT NULL,
+  PRIMARY KEY (Id)
+);
+
+CREATE TABLE Cliente (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Nombre VARCHAR(100) NOT NULL,
+  Telefono VARCHAR(20),
+  PRIMARY KEY (Id)
+);
+
+CREATE TABLE Usuario (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Nombre VARCHAR(100) NOT NULL,
+  Correo VARCHAR(255) NOT NULL UNIQUE,
+  Password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (Id)
+);
+
+CREATE TABLE Venta (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Fecha DATE NOT NULL,
+  Total DECIMAL(10,2) NOT NULL,
+  Id_Usuario INT NOT NULL,
+  Id_Cliente INT,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (Id_Usuario) REFERENCES Usuario(Id),
+  FOREIGN KEY (Id_Cliente) REFERENCES Cliente(Id)
+);
+
+CREATE TABLE DetalleVenta (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Id_Venta INT NOT NULL,
+  Id_Producto INT NOT NULL,
+  Cantidad INT NOT NULL,
+  Subtotal DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (Id),
+  FOREIGN KEY (Id_Venta) REFERENCES Venta(Id),
+  FOREIGN KEY (Id_Producto) REFERENCES Producto(Id)
+);
+
+-- Por el cifrado!!! 
+ALTER TABLE Usuario
+MODIFY Password VARCHAR(155) NOT NULL;
+
+SELECT * FROM user;
