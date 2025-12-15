@@ -1,12 +1,10 @@
 const pool = require('../config/db');
 
-// GET detalle de Venta 
 const obtenerDetalles = (req, res) => {
     const sql = 'SELECT Id, Id_Venta, Id_Producto, Cantidad, Subtotal FROM detalleventa';
 
     pool.query(sql, (err, results) => {
         if (err) {
-            console.log('Error en la consulta sql (detalleventa -> listado)...');
             return res.status(500).json({ status: 500, message: 'Error en la consulta sql...' });
         }
 
@@ -14,7 +12,6 @@ const obtenerDetalles = (req, res) => {
     });
 };
 
-// GET /detalleventa/venta/:Id -> detalles por Id_Venta
 const obtenerDetallesPorVenta = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -31,7 +28,6 @@ const obtenerDetallesPorVenta = (req, res) => {
 
     pool.query(sql, [Id], (err, results) => {
         if (err) {
-            console.log('Error en la consulta sql (detalleventa -> por venta)...');
             return res.status(500).json({ status: 500, message: 'Error en la consulta sql...' });
         }
 
@@ -39,7 +35,6 @@ const obtenerDetallesPorVenta = (req, res) => {
     });
 };
 
-// GET /detalleventa/producto/:Id -> detalles por Id_Producto
 const obtenerDetallesPorProducto = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -51,7 +46,6 @@ const obtenerDetallesPorProducto = (req, res) => {
 
     pool.query(sql, [Id], (err, results) => {
         if (err) {
-            console.log('Error en la consulta sql (detalleventa -> por producto)...');
             return res.status(500).json({ status: 500, message: 'Error en la consulta sql...' });
         }
 
@@ -59,7 +53,6 @@ const obtenerDetallesPorProducto = (req, res) => {
     });
 };
 
-// GET /detalleventa/:Id -> detalle por Id (único)
 const obtenerDetallePorId = (req, res) => {
     const Id = parseInt(req.params.Id);
 
@@ -71,7 +64,6 @@ const obtenerDetallePorId = (req, res) => {
 
     pool.query(sql, [Id], (err, results) => {
         if (err) {
-            console.log('Error en la consulta sql (detalleventa -> por id)...');
             return res.status(500).json({ status: 500, message: 'Error en la consulta sql...' });
         }
 
